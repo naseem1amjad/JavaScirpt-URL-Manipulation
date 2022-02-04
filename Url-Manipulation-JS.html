@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>
+JavaScript by Naseem Amjad
+</title>
+<style>
+code {
+  font-family: Consolas,"courier new";
+  color: green;
+  background-color: #000000;
+  padding: 2px;
+  font-size: 105%;
+}
+
+pre {
+	background-color: black;
+}
+</style>
+</head>
+<body onload="setSelection();">
+<h2>
+Replace Parameter in URL using JavaScript
+</h2><BR><BR>
+<script>
+function replaceUrlParam(url, paramName, paramValue)//Main function that intelligently replaces Parameter Value in URL (credit goes to its developer which is not me)
+{
+    if (paramValue == null) {
+        paramValue = '';
+    }
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+    if (url.search(pattern)>=0) {
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+    url = url.replace(/[?#]$/,'');
+    return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+}
+
+function myUrl(mythis){//Replace Url Parameter "dropdown_value" with Vaule of selected DropDown
+
+var myselection=mythis.value;
+var newUrl=replaceUrlParam(location.href,"dropdown_value", myselection);
+return newUrl;
+
+}
+
+function setSelection(){//set Default value of DropDown "dropdown_option_id" based on Url parameterValue of "dropdown_value"
+
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('dropdown_value');
+document.getElementById("dropdown_option_id").value=myParam;
+
+}
+</script>
+<form action="JsUrlManip.html" method="POST">
+DropDown
+ <select name="dropdown_option_name" id="dropdown_option_id" onchange="location.href=myUrl(this);">
+ <option value="One">One</option>
+ <option value="Two">Two</option>
+ <option value="Three">Three</option>
+ <option value="Four">Four</option>
+ </select>
+ &nbsp; The dropdown is selected based on value in URL (state management) {called on body onload event} </form>
+ <BR>
+ <a href="Url-Manipulation-JS.html?developer=NaseemAmjad">Additional Variables in URL (i.e. QueryString)</a>
+ <BR>
+ <HR>
+ JavaScript Function: <BR>
+ <pre>
+ <code>
+function replaceUrlParam(url, paramName, paramValue)//Main function that intelligently replaces Parameter Value in URL
+{
+    if (paramValue == null) {
+        paramValue = '';
+    }
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+    if (url.search(pattern)>=0) {
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+    url = url.replace(/[?#]$/,'');
+    return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+}
+</code>
+</pre>
+
+<BR>
+<h5>See Source Code of this web page for more information</h5>
+ </body>
+ 
+ </html>
